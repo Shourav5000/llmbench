@@ -156,7 +156,7 @@ function ModelCard({ result, isWinner, delay=0 }) {
         </div>
 
         {/* Stats */}
-        <div style={{display:'flex',gap:8,padding:'12px 16px',background:'rgba(253,246,238,0.6)',borderBottom:'1px solid var(--border)'}}>
+        <div className="stat-boxes" style={{display:'flex',gap:8,padding:'12px 16px',background:'rgba(253,246,238,0.6)',borderBottom:'1px solid var(--border)'}}>
           <StatBox label="Time"       value={`${(result.latency_ms/1000).toFixed(1)}s`} color={meta.color} delay={delay}/>
           <StatBox label="Tokens"     value={result.output_tokens}                       color={meta.color} delay={delay+0.05}/>
           <StatBox label="Cost"       value={`$${result.cost_usd.toFixed(5)}`}           color={meta.color} delay={delay+0.1}/>
@@ -207,7 +207,7 @@ function SideBySide({ results }) {
         <span style={{fontFamily:'var(--font-h)',fontWeight:700,fontSize:14,color:'var(--text)'}}>↔ Side-by-side responses</span>
         <span style={{fontSize:11,color:'var(--text3)'}}>Compare all 3 at once</span>
       </div>
-      <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)'}}>
+      <div className="side-by-side-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)'}}>
         {results.map((r,i) => {
           const meta = MODELS_META[r.model_label]||{color:'#d4621a',bg:'#fef2ea',border:'#f0b070',emoji:'◆'}
           return (
@@ -245,7 +245,7 @@ function CostCalculator({ results }) {
           style={{flex:1,accentColor:'var(--orange)',height:6}}/>
         <span style={{fontFamily:'var(--font-m)',fontSize:14,color:'var(--orange)',fontWeight:700,minWidth:90,background:'var(--orange-bg)',padding:'4px 10px',borderRadius:8}}>{runs.toLocaleString()}/day</span>
       </div>
-      <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:10}}>
+      <div className="cost-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:10}}>
         {results.map(r => {
           const meta = MODELS_META[r.model_label]||{color:'#d4621a',bg:'#fef2ea',border:'#f0b070'}
           const daily=r.cost_usd*runs, monthly=daily*30, yearly=daily*365
@@ -280,7 +280,7 @@ function BestForPanel({ results }) {
         <span style={{fontFamily:'var(--font-h)',fontWeight:700,fontSize:16,color:'var(--text)'}}>When to use each model</span>
       </div>
       <div style={{fontSize:12,color:'var(--text3)',marginBottom:14}}>Based on this benchmark run</div>
-      <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:8}}>
+      <div className="bestfor-grid" style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:8}}>
         {recs.map((rec,i) => {
           const meta = MODELS_META[rec.model]||{color:'#d4621a',bg:'#fef2ea',border:'#f0b070'}
           return (
@@ -373,7 +373,7 @@ export default function App() {
         position:'sticky', top:0, zIndex:100,
         boxShadow:'0 4px 20px rgba(44,26,10,0.3)',
         borderBottom:'2px solid var(--orange)',
-      }}>
+      }} className="header-inner">
         <div style={{display:'flex',alignItems:'center',gap:12}}>
           <div style={{
             width:36,height:36,borderRadius:10,
@@ -384,14 +384,14 @@ export default function App() {
             animation:'pulse-ring 3s infinite',
           }}>⬡</div>
           <div>
-            <span style={{fontFamily:'var(--font-h)',fontWeight:800,fontSize:20,color:'#fff',letterSpacing:'-0.02em'}}>LLMBench</span>
+            <span className="header-logo-text" style={{fontFamily:'var(--font-h)',fontWeight:800,fontSize:20,color:'#fff',letterSpacing:'-0.02em'}}>LLMBench</span>
             <span style={{fontFamily:'var(--font-s)',fontSize:11,color:'rgba(255,255,255,0.5)',marginLeft:8}}>by Shourav</span>
           </div>
-          <span style={{fontSize:11,color:'#d4b896',background:'rgba(255,255,255,0.1)',border:'1px solid rgba(255,255,255,0.15)',padding:'3px 10px',borderRadius:100,fontWeight:600}}>Claude Benchmarker</span>
+          <span className="header-badge" style={{fontSize:11,color:'#d4b896',background:'rgba(255,255,255,0.1)',border:'1px solid rgba(255,255,255,0.15)',padding:'3px 10px',borderRadius:100,fontWeight:600}}>Claude Benchmarker</span>
         </div>
-        <div style={{display:'flex',alignItems:'center',gap:16}}>
+        <div className="header-models" style={{display:'flex',alignItems:'center',gap:16}}>
           {history.length>0 && (
-            <button onClick={()=>exportCSV(history)} style={{background:'rgba(212,98,26,0.2)',border:'1px solid rgba(212,98,26,0.4)',color:'#ffcc88',fontFamily:'var(--font-s)',fontSize:12,fontWeight:700,padding:'6px 14px',borderRadius:8,cursor:'pointer',transition:'all 0.2s'}}
+            <button className="header-csv" onClick={()=>exportCSV(history)} style={{background:'rgba(212,98,26,0.2)',border:'1px solid rgba(212,98,26,0.4)',color:'#ffcc88',fontFamily:'var(--font-s)',fontSize:12,fontWeight:700,padding:'6px 14px',borderRadius:8,cursor:'pointer',transition:'all 0.2s'}}
               onMouseEnter={e=>e.currentTarget.style.background='rgba(212,98,26,0.35)'}
               onMouseLeave={e=>e.currentTarget.style.background='rgba(212,98,26,0.2)'}>
               ⬇ Export CSV
@@ -437,8 +437,8 @@ export default function App() {
         <main style={{flex:1,overflowY:'auto',padding:'2rem'}}>
 
           {/* Input card */}
-          <div className="fade-up" style={{background:'rgba(255,255,255,0.95)',backdropFilter:'blur(8px)',border:'1px solid var(--border)',borderRadius:20,padding:'1.5rem',marginBottom:'1.75rem',boxShadow:'var(--shadow2)'}}>
-            <div style={{fontFamily:'var(--font-h)',fontWeight:800,fontSize:22,color:'var(--text)',marginBottom:4}}>What do you want to benchmark?</div>
+          <div className="input-card fade-up" style={{background:'rgba(255,255,255,0.95)',backdropFilter:'blur(8px)',border:'1px solid var(--border)',borderRadius:20,padding:'1.5rem',marginBottom:'1.75rem',boxShadow:'var(--shadow2)'}}>
+            <div className="input-title" style={{fontFamily:'var(--font-h)',fontWeight:800,fontSize:22,color:'var(--text)',marginBottom:4}}>What do you want to benchmark?</div>
             <div style={{fontSize:13,color:'var(--text2)',marginBottom:16,lineHeight:1.65}}>All 3 Claude models respond in parallel. Each answer is automatically scored on quality, clarity, and completeness.</div>
 
             <div style={{position:'relative'}}>
@@ -465,8 +465,8 @@ export default function App() {
               )}
             </div>
 
-            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginTop:14,flexWrap:'wrap',gap:10}}>
-              <div style={{display:'flex',gap:6,flexWrap:'wrap',alignItems:'center'}}>
+            <div className="run-row" style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginTop:14,flexWrap:'wrap',gap:10}}>
+              <div className="examples-row" style={{display:'flex',gap:6,flexWrap:'wrap',alignItems:'center'}}>
                 <span style={{fontSize:12,color:'var(--text3)',fontWeight:600}}>Try:</span>
                 {EXAMPLES.map(e=>(
                   <button key={e.label} onClick={()=>setPrompt(e.prompt)} style={{
@@ -503,9 +503,9 @@ export default function App() {
           {/* Loading */}
           {loading && (
             <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:24,padding:'3rem'}}>
-              <div style={{display:'flex',gap:16}}>
+              <div className="loading-cards" style={{display:'flex',gap:16}}>
                 {[['⚡','Claude Haiku','#d4921a'],['⚖️','Claude Sonnet','#d4621a'],['🧠','Claude Opus','#7c4a1e']].map(([e,n,c],i)=>(
-                  <div key={n} style={{background:'#fff',border:`2px solid ${c}`,borderRadius:16,padding:'16px 22px',display:'flex',alignItems:'center',gap:12,boxShadow:`0 8px 24px ${c}30`,animation:`bob 1.4s ease-in-out ${i*0.2}s infinite`}}>
+                  <div className="loading-card" key={n} style={{background:'#fff',border:`2px solid ${c}`,borderRadius:16,padding:'16px 22px',display:'flex',alignItems:'center',gap:12,boxShadow:`0 8px 24px ${c}30`,animation:`bob 1.4s ease-in-out ${i*0.2}s infinite`}}>
                     <span style={{fontSize:24}}>{e}</span>
                     <div>
                       <div style={{fontFamily:'var(--font-h)',fontSize:14,fontWeight:700,color:'var(--text)'}}>{n}</div>
@@ -530,12 +530,12 @@ export default function App() {
           {result && !loading && (
             <>
               {/* Summary */}
-              <div className="fade-up" style={{background:'rgba(255,255,255,0.95)',border:'1px solid var(--border)',borderRadius:16,padding:'16px 22px',marginBottom:'1.5rem',display:'flex',alignItems:'center',gap:20,flexWrap:'wrap',boxShadow:'var(--shadow)'}}>
+              <div className="summary-bar fade-up" style={{background:'rgba(255,255,255,0.95)',border:'1px solid var(--border)',borderRadius:16,padding:'16px 22px',marginBottom:'1.5rem',display:'flex',alignItems:'center',gap:20,flexWrap:'wrap',boxShadow:'var(--shadow)'}}>
                 <div style={{flex:1}}>
                   <div style={{fontSize:10,color:'var(--text3)',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:4}}>Benchmarked prompt</div>
                   <div style={{fontSize:14,color:'var(--text)',fontWeight:500,lineHeight:1.5}}>"{result.prompt.slice(0,90)}{result.prompt.length>90?'…':''}"</div>
                 </div>
-                <div style={{display:'flex',gap:28}}>
+                <div className="summary-stats" style={{display:'flex',gap:28}}>
                   <div style={{textAlign:'center'}}>
                     <div style={{fontSize:10,color:'var(--text3)',fontWeight:700,textTransform:'uppercase',letterSpacing:'0.08em',marginBottom:4}}>Winner</div>
                     <div style={{fontFamily:'var(--font-h)',fontSize:16,fontWeight:800,color:(MODELS_META[result.winner]||{}).color||'var(--orange)'}}>🏆 {result.winner}</div>
@@ -548,7 +548,7 @@ export default function App() {
               </div>
 
               {/* Charts */}
-              <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:12,marginBottom:'1.5rem'}}>
+              <div className="charts-grid" style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:12,marginBottom:'1.5rem'}}>
                 {[
                   {title:'Response Time',subtitle:'lower is faster',unit:'ms',key:r=>Math.round(r.latency_ms)},
                   {title:'Quality Score', subtitle:'higher is better',unit:'/10',key:r=>r.scores.overall||0},
@@ -570,7 +570,7 @@ export default function App() {
               </div>
 
               {activeTab==='cards' && (
-                <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:'1rem'}}>
+                <div className="cards-grid" style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:'1rem'}}>
                   {sorted.map((r,i)=><ModelCard key={r.model_id} result={r} isWinner={r.model_label===result.winner} delay={i*0.1}/>)}
                 </div>
               )}
@@ -581,13 +581,13 @@ export default function App() {
           {/* Empty state */}
           {!result && !loading && !error && (
             <div style={{textAlign:'center',padding:'3rem 1rem'}}>
-              <div className="fade-up" style={{fontFamily:'var(--font-h)',fontWeight:800,fontSize:34,color:'var(--text)',marginBottom:12,letterSpacing:'-0.03em',lineHeight:1.2}}>
+              <div className="empty-title fade-up" style={{fontFamily:'var(--font-h)',fontWeight:800,fontSize:34,color:'var(--text)',marginBottom:12,letterSpacing:'-0.03em',lineHeight:1.2}}>
                 Benchmark Claude models<br/><span style={{color:'var(--orange)',backgroundImage:'linear-gradient(135deg,var(--orange),var(--gold))',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>side by side.</span>
               </div>
               <p className="fade-up" style={{animationDelay:'0.1s',fontSize:14,color:'var(--text2)',lineHeight:1.8,maxWidth:480,margin:'0 auto 2.5rem'}}>
                 Type any prompt. All 3 Claude models answer at once. See which is fastest, most accurate, and most cost-efficient — instantly.
               </p>
-              <div style={{display:'flex',gap:14,justifyContent:'center',flexWrap:'wrap'}}>
+              <div className="feature-cards" style={{display:'flex',gap:14,justifyContent:'center',flexWrap:'wrap'}}>
                 {[
                   {emoji:'⚡',title:'Parallel calls',  desc:'All 3 models at once',      color:'#d4921a',bg:'linear-gradient(135deg,#fef9ec,#fef0c7)'},
                   {emoji:'🤖',title:'AI evaluation',   desc:'Auto-scored on quality',     color:'#d4621a',bg:'linear-gradient(135deg,#fef2ea,#fde8d0)'},

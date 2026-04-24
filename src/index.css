@@ -59,3 +59,74 @@ body {
 .fade-up   { animation: fadeUp 0.45s ease both; }
 .pop-in    { animation: popIn  0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
 .slide-in  { animation: slideIn 0.3s ease both; }
+
+/* ── Mobile responsive ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Header */
+  .header-models { display: none !important; }
+  .header-inner  { padding: 0 1rem !important; }
+  .header-logo-text { font-size: 16px !important; }
+  .header-badge  { display: none !important; }
+
+  /* Hide sidebar on mobile */
+  aside { display: none !important; }
+
+  /* Main padding */
+  main { padding: 1rem !important; }
+
+  /* Input card */
+  .input-card { padding: 1rem !important; border-radius: 14px !important; }
+  .input-title { font-size: 17px !important; }
+
+  /* Example chips — wrap and shrink */
+  .examples-row { gap: 5px !important; }
+  .examples-row button { font-size: 10px !important; padding: 4px 8px !important; }
+
+  /* Run button row — stack vertically */
+  .run-row { flex-direction: column !important; align-items: stretch !important; }
+  .run-row button:last-child { width: 100% !important; }
+
+  /* Loading cards — stack vertically */
+  .loading-cards { flex-direction: column !important; align-items: center !important; gap: 10px !important; }
+  .loading-card  { width: 100% !important; max-width: 260px !important; }
+
+  /* Summary bar — stack */
+  .summary-bar { flex-direction: column !important; gap: 12px !important; }
+  .summary-stats { justify-content: space-around !important; width: 100% !important; }
+
+  /* Charts — 2 columns on mobile */
+  .charts-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+
+  /* Best for — 1 column on mobile */
+  .bestfor-grid { grid-template-columns: 1fr !important; }
+
+  /* Cost calculator cards — 1 column */
+  .cost-grid { grid-template-columns: 1fr !important; }
+
+  /* Model cards — 1 column */
+  .cards-grid { grid-template-columns: 1fr !important; }
+
+  /* Side by side — stack vertically */
+  .side-by-side-grid { grid-template-columns: 1fr !important; }
+  .side-by-side-grid > div { border-right: none !important; border-bottom: 1px solid var(--border) !important; }
+  .side-by-side-grid > div:last-child { border-bottom: none !important; }
+
+  /* Stat boxes — 2x2 grid */
+  .stat-boxes { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 6px !important; }
+
+  /* Feature cards on empty state */
+  .feature-cards { gap: 8px !important; }
+  .feature-cards > div { width: calc(50% - 4px) !important; padding: 14px !important; }
+
+  /* Empty state title */
+  .empty-title { font-size: 24px !important; }
+
+  /* Header CSV button */
+  .header-csv { font-size: 11px !important; padding: 5px 10px !important; }
+}
+
+@media (max-width: 400px) {
+  .charts-grid { grid-template-columns: 1fr !important; }
+  .feature-cards > div { width: 100% !important; }
+  .stat-boxes { grid-template-columns: repeat(2,1fr) !important; }
+}
