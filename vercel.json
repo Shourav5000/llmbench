@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/evaluate", "destination": "https://llmbench.onrender.com/evaluate" },
+    { "source": "/models",   "destination": "https://llmbench.onrender.com/models" },
+    { "source": "/health",   "destination": "https://llmbench.onrender.com/health" }
+  ]
+}
